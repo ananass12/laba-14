@@ -22,3 +22,39 @@ document.querySelector('#app').innerHTML = `
 `
 
 setupCounter(document.querySelector('#counter'))
+
+// Сохранение данных в localStorage
+document.querySelectorAll('.editable').forEach(element => {
+    element.addEventListener('input', () => {
+        localStorage.setItem(element.textContent.trim(), element.innerHTML);
+    });
+    
+    // Восстановление данных из localStorage
+    const savedContent = localStorage.getItem(element.textContent.trim());
+    if (savedContent) {
+        element.innerHTML = savedContent;
+    }
+});
+
+// Ripple effect
+document.querySelectorAll('.ripple').forEach(button => {
+    button.addEventListener('click', function (e) {
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = ${size}px;
+        ripple.style.left = ${e.clientX - rect.left - size / 2}px;
+        ripple.style.top = ${e.clientY - rect.top - size / 2}px;
+        ripple.classList.add('ripple');
+        this.appendChild(ripple);
+        
+        setTimeout(() => {
+            ripple.remove();
+        }, 600);
+    });
+});
+// Скачать PDF (заглушка)
+document.getElementById('downloadBtn').addEventListener('click', () => {
+    alert('Функция скачивания PDF еще не реализована.');
+});
+
